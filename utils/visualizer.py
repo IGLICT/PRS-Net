@@ -20,7 +20,7 @@ class Visualizer():
             import tensorflow as tf
             self.tf = tf
             self.log_dir = os.path.join(opt.checkpoints_dir, opt.name, 'logs')
-            self.writer = tf.summary.create_file_writer(self.log_dir)
+            self.writer = tf.compat.v1.summary.FileWriter(self.log_dir)
 
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
         with open(self.log_name, "a") as log_file:
@@ -32,11 +32,12 @@ class Visualizer():
     def plot_current_errors(self, errors, step):
         if self.tf_log:
             for tag, value in errors.items():
-                with self.writer.as_default():
-                    self.tf.summary.scalar(tag, value, step=step)
-                    # self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
-                    self.writer.flush()
-                # self.writer.add_summary(summary, step)
+                # with self.writer.as_default():
+                    # self.tf.summary.scalar(tag, value, step=step)
+                summary = self.tf.compat.v1.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
+                self.writer.add_summary(summary, step)
+                self.writer.flush()
+                
     def log_histogram(self, tag, values, step, bins=1000):
         counts, bin_edges = np.histogram(values, bins=bins)
 
@@ -53,11 +54,12 @@ class Visualizer():
             hist.bucket_limit.append(edge)
         for c in counts:
             hist.bucket.append(c)
-        with self.writer.as_default():
-            self.tf.summary.histogram(tag, hist, step=step)
-            # self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
-            self.writer.flush()
-        # self.writer.add_summary(summary, step)
+        # with self.writer.as_default():
+            # self.tf.summary.histogram(tag, hist, step=step)
+        self.tf.compat.v1.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
+        self.writer.add_summary(summary, step)
+        self.writer.flush()
+        # 
             
     def plot_current_weights(self, net, step):
         if self.tf_log:
