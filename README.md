@@ -30,6 +30,7 @@ The code is tested with Ubuntu 18.04, Python 3.8, Pytorch v1.7, TensorFlow v1.15
 Install the following Python dependencies (with `pip install`):
     numpy==1.20.1
     torch==1.7.1
+    scipy==1.6.0
     
 
 ## Inference
