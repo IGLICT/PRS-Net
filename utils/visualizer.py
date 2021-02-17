@@ -20,7 +20,8 @@ class Visualizer():
             import tensorflow as tf
             self.tf = tf
             self.log_dir = os.path.join(opt.checkpoints_dir, opt.name, 'logs')
-            self.writer = tf.summary.create_file_writer(self.log_dir)
+            with v1.Graph().as_default():
+                self.writer = tf.compat.v1.summary.FileWriter(self.log_dir)
 
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
         with open(self.log_name, "a") as log_file:
