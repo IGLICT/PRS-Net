@@ -33,7 +33,8 @@ class Visualizer():
         if self.tf_log:
             for tag, value in errors.items():
                 with self.writer.as_default():
-                    self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
+                    self.tf.summary.scalar(tag, value, step=step)
+                    # self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
                     self.writer.flush()
                 # self.writer.add_summary(summary, step)
     def log_histogram(self, tag, values, step, bins=1000):
@@ -53,7 +54,8 @@ class Visualizer():
         for c in counts:
             hist.bucket.append(c)
         with self.writer.as_default():
-            self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
+            self.tf.summary.histogram(tag, hist, step=step)
+            # self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
             self.writer.flush()
         # self.writer.add_summary(summary, step)
             
