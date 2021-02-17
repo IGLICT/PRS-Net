@@ -40,7 +40,7 @@ class Visualizer():
     def log_histogram(self, tag, values, step, bins=1000):
         counts, bin_edges = np.histogram(values, bins=bins)
 
-        hist = self.tf.HistogramProto()
+        hist = self.tf.compat.v1.HistogramProto()
         hist.min = float(np.min(values))
         hist.max = float(np.max(values))
         hist.num = int(np.prod(values.shape))
