@@ -32,7 +32,7 @@ class PRSNet(BaseModel):
 
         if not self.isTrain or opt.continue_train or opt.load_pretrain:
             pretrained_path = '' if not self.isTrain else opt.load_pretrain
-            self.load_network(self.netPRS, self.name() + 'PRS', opt.which_epoch, pretrained_path)
+            self.load_network(self.netPRS, self.name(), opt.which_epoch, pretrained_path)
         if self.isTrain:
             self.sym_loss = symLoss(opt.gridBound, opt.gridSize)
             self.reg_loss = RegularLoss()
@@ -64,7 +64,7 @@ class PRSNet(BaseModel):
         return plane, quat
 
     def save(self, which_epoch):
-        self.save_network(self.netPRS, self.name() + 'PRS', which_epoch, self.gpu_ids)
+        self.save_network(self.netPRS, self.name(), which_epoch, self.gpu_ids)
 
 
 

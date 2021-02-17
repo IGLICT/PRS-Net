@@ -12,7 +12,7 @@ class BaseOptions():
 
     def initialize(self):    
         # experiment specifics
-        self.parser.add_argument('--name', type=str, default='label2city', help='name of the experiment. It decides where to store samples and models')        
+        self.parser.add_argument('--name', type=str, default='test', help='name of the experiment. It decides where to store samples and models')        
         self.parser.add_argument('--gpu_ids', type=str, default='0', help='gpu ids: e.g. 0  0,1,2, 0,2. use -1 for CPU')
         self.parser.add_argument('--checkpoints_dir', type=str, default='./checkpoints', help='models are saved here')
         self.parser.add_argument('--data_type', default=32, type=int, choices=[8, 16, 32], help="Supported data type i.e. 8, 16, 32 bit")
@@ -23,7 +23,7 @@ class BaseOptions():
         self.parser.add_argument('--batchSize', type=int, default=32, help='input batch size')
         # for setting inputs
         self.parser.add_argument('--dataroot', type=str, default='./datasets/shapenet/') 
-        self.parser.add_argument('--noshuffle', action='store_true', help='if true, takes datas in order to make batches, otherwise takes them randomly') 
+        self.parser.add_argument('--noshuffle', action='store_true', help='if true, takes data in order to make batches, otherwise takes them randomly') 
         self.parser.add_argument('--nThreads', default=2, type=int, help='# threads for loading data')
         self.parser.add_argument('--max_dataset_size', type=int, default=float("inf"), help='Maximum number of samples allowed per dataset. If the dataset directory contains more than max_dataset_size, only a subset is loaded.')
 

@@ -2,7 +2,7 @@
 
 
 ## Introduction
-This repository is code release for PRS-Net: Planar Reflective Symmetry Detection Net for 3D Models (arXiv report [here](https://arxiv.org/pdf/1904.09664.pdf)).
+This repository is code release for PRS-Net: Planar Reflective Symmetry Detection Net for 3D Models (arXiv report [here](https://arxiv.org/pdf/1910.06511.pdf)).
 
 In geometry processing, symmetry is a universal type of high-level structural information of 3D models and benefits many geometry processing tasks including shape segmentation, alignment, matching, and completion. Thus it is an important problem to analyze various symmetry forms of 3D shapes. Planar reflective symmetry is the most fundamental one. Traditional methods based on spatial sampling can be time-consuming and may not be able to identify all the symmetry planes. In this paper, we present a novel learning framework to automatically discover global planar reflective symmetry of a 3D shape. Our framework trains an unsupervised 3D convolutional neural network to extract global model features and then outputs possible global symmetry parameters, where input shapes are represented using voxels. We introduce a dedicated symmetry distance loss along with a regularization loss to avoid generating duplicated symmetry planes. Our network can also identify generalized cylinders by predicting their rotation axes. We further provide a method to remove invalid and duplicated planes and axes. We demonstrate that our method is able to produce reliable and accurate results. Our neural network based method is hundreds of times faster than the state-of-the-art methods, which are based on sampling. Our method is also robust even with noisy or incomplete input surfaces.
 
@@ -25,13 +25,12 @@ If you find our work useful in your research, please consider citing:
 
 ## Installation
 
-Install [Pytorch](https://pytorch.org/get-started/locally/) and [Tensorflow](https://github.com/tensorflow/tensorflow) (for TensorBoard). It is required that you have access to GPUs. Matlab is required to prepare data for ShapeNet. The code is tested with Ubuntu 18.04, Python 3.8, Pytorch v1.7, TensorFlow v1.15, CUDA 10.0 and cuDNN v7.6.
+The code is tested with Ubuntu 18.04, Python 3.8, Pytorch v1.7, TensorFlow v1.15, CUDA 10.0 and cuDNN v7.6.
 
 Install the following Python dependencies (with `pip install`):
-
-    matplotlib
-    opencv-python
-    plyfile
+    numpy==1.20.1
+    torch==1.7.1
+    
 
 ## Inference
 
