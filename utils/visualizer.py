@@ -32,8 +32,10 @@ class Visualizer():
     def plot_current_errors(self, errors, step):
         if self.tf_log:
             for tag, value in errors.items():
-                summary = self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
-                self.writer.add_summary(summary, step)
+                with self.writer.as_default():
+                    self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
+                    self.writer.flush()
+                # self.writer.add_summary(summary, step)
     def log_histogram(self, tag, values, step, bins=1000):
         counts, bin_edges = np.histogram(values, bins=bins)
 
@@ -50,10 +52,11 @@ class Visualizer():
             hist.bucket_limit.append(edge)
         for c in counts:
             hist.bucket.append(c)
-
-        summary = self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
-        self.writer.add_summary(summary, step)
-        self.writer.flush()
+        with self.writer.as_default():
+            self.tf.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
+            self.writer.flush()
+        # self.writer.add_summary(summary, step)
+            
     def plot_current_weights(self, net, step):
         if self.tf_log:
             for tag, value in net.named_parameters():
