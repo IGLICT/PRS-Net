@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from .transformer import *
 import scipy.io as sio
-
+# To handle a bug
 class Idn(nn.Module):
     def __init__(self,net):
         super(Idn, self).__init__()
@@ -31,23 +31,32 @@ def init_net(net, init_gain=0.02, gpu_ids=[]):
     return net
 
 
-def define_PRSNet(input_nc, ngf, conv_layers, num_plane, num_quat, biasTerms, init_gain=0.02, gpu_ids=[]):
-    net = PRSNet(input_nc, ngf, conv_layers, num_plane, num_quat, biasTerms)
+def define_PRSNet(input_nc, output_nc, conv_layers, num_plane, num_quat, biasTerms, useBn, activation, init_gain=0.02, gpu_ids=[]):
+    if activation=='relu':
+        ac_fun = nn.relu()
+    elif activation=='tanh':
+        ac_fun = nn.tanh()
+    elif activation=='lrelu':
+        ac_fun = nn.LeakyReLU(0.2, True)
+    if useBn:
+        print('using batch normalization')
+        
+    net = PRSNet(input_nc, output_nc, conv_layers, num_plane, num_quat, biasTerms, useBn, ac_fun)
     return init_net(net, init_gain, gpu_ids)
     
 class PRSNet(nn.Module):
-    def __init__(self, input_nc, ngf, conv_layers, num_plane, num_quat, biasTerms, useBn = False, activation = nn.LeakyReLU(0.2, True)):
+    def __init__(self, input_nc, output_nc, conv_layers, num_plane, num_quat, biasTerms, useBn = False, activation = nn.LeakyReLU(0.2, True)):
         super(PRSNet, self).__init__()
-        self.encoder = Encoder(input_nc, ngf, conv_layers, useBn = useBn, activation = activation)
-        self.pre = symPred(ngf*(2**(conv_layers-1)), num_plane, num_quat, biasTerms, activation = activation)
+        self.encoder = Encoder(input_nc, output_nc, conv_layers, useBn = useBn, activation = activation)
+        self.pre = symPred(output_nc*(2**(conv_layers-1)), num_plane, num_quat, biasTerms, activation = activation)
     def forward(self, voxel):
         return self.pre(self.encoder(voxel))
 
 class Encoder(nn.Module):
-    def __init__(self, input_nc, ngf, conv_layers, useBn = False, activation = nn.LeakyReLU(0.2, True)):
+    def __init__(self, input_nc, output_nc, conv_layers, useBn = False, activation = nn.LeakyReLU(0.2, True)):
         super(Encoder, self).__init__()
         model=[]
-        output_nc = ngf
+        output_nc = output_nc
         for i in range(conv_layers):
             model += [nn.Conv3d(input_nc, output_nc, kernel_size=3, stride=1 ,padding=1)]
             if useBn:

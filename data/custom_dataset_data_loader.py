@@ -4,8 +4,8 @@ from data.base_data_loader import BaseDataLoader
 
 def CreateDataset(opt):
     dataset = None
-    from data.aligned_dataset import AlignedDataset
-    dataset = AlignedDataset()
+    from data.sym_dataset import SymDataset
+    dataset = SymDataset()
 
     print("dataset [%s] was created" % (dataset.name()))
     dataset.initialize(opt)
@@ -25,7 +25,7 @@ class CustomDatasetDataLoader(BaseDataLoader):
         self.dataloader = torch.utils.data.DataLoader(
             self.dataset,
             batch_size=opt.batchSize,
-            shuffle=not opt.sb,
+            shuffle=not opt.noshuffle,
             num_workers=int(opt.nThreads),
             collate_fn = self.my_collate)
 

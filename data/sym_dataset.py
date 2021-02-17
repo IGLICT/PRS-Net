@@ -2,13 +2,26 @@
 ### Licensed under the CC BY-NC-SA 4.0 license (https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).
 import os.path
 from data.base_dataset import BaseDataset
-from data.image_folder import make_dataset
 import scipy.io as sio
 import torch
-from random import randint
+
+def is_mat_file(filename):
+    return filename.endswith('mat')
 
 
-class AlignedDataset(BaseDataset):
+def make_dataset(dir):
+    data = []
+    assert os.path.isdir(dir), '%s is not a valid directory' % dir
+
+    for root, _, fnames in sorted(os.walk(dir)):
+        for fname in fnames:
+            if is_mat_file(fname):
+                path = os.path.join(root, fname)
+                data.append(path)
+
+    return data
+
+class SymDataset(BaseDataset):
     def initialize(self, opt):
         self.opt = opt
         self.root = opt.dataroot
@@ -30,14 +43,11 @@ class AlignedDataset(BaseDataset):
         sample = data['surfaceSamples']
         voxel = data['Volume']
         cp = data['closestPoints']
-        # vertices = data['vertices']
-        # faces = data['faces']
-        # axisangle = data['axisangle']
 
         voxel=torch.from_numpy(voxel).float().unsqueeze(0)
         sample=torch.from_numpy(sample).float().t()
-        cp=torch.from_numpy(cp).float().view(-1,3)
-        # print(voxel.shape,sample.shape,cp.shape)
+        
+        cp=torch.from_numpy(cp).float().reshape(-1,3)
 
         input_dict = {'voxel': voxel, 'sample': sample, 'cp': cp, 'path':data_path}
 
@@ -47,4 +57,4 @@ class AlignedDataset(BaseDataset):
         return self.dataset_size // self.opt.batchSize * self.opt.batchSize
 
     def name(self):
-        return 'AlignedDataset'
+        return 'SymDataset'

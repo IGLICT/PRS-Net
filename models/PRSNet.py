@@ -7,7 +7,7 @@ class PRSNet(BaseModel):
         return 'PRSNet'
     def initialize(self, opt):
         BaseModel.initialize(self, opt)
-        if opt.resize_or_crop != 'none' or not opt.isTrain: # when training at full res this causes OOM
+        if not opt.isTrain: # when training at full res this causes OOM
             torch.backends.cudnn.benchmark = True
         self.isTrain = opt.isTrain
         biasTerms={}
@@ -27,7 +27,7 @@ class PRSNet(BaseModel):
                 biasTerms['quat'+str(i)] = (quat/np.linalg.norm(quat)).tolist()
 
         self.opt = opt
-        self.netPRS = define_PRSNet(opt.input_nc, opt.ngf, opt.conv_layers, opt.num_plane, opt.num_quat, biasTerms,gpu_ids=self.gpu_ids)
+        self.netPRS = define_PRSNet(opt.input_nc, opt.output_nc, opt.conv_layers, opt.num_plane, opt.num_quat, biasTerms, opt.bn, opt.activation, gpu_ids=self.gpu_ids)
 
 
         if not self.isTrain or opt.continue_train or opt.load_pretrain:
@@ -49,7 +49,7 @@ class PRSNet(BaseModel):
         quat, plane = self.netPRS(voxel)
         # print(quat,plane)
         loss_ref, loss_rot = self.sym_loss(points, cp, voxel, plane = plane, quat = quat)
-        loss_reg_plane, loss_reg_rot = self.reg_loss(plane = plane, quat = quat, weight=self.opt.weights)
+        loss_reg_plane, loss_reg_rot = self.reg_loss(plane = plane, quat = quat, weight=self.opt.weight)
 
         return [loss_ref, loss_rot,loss_reg_plane, loss_reg_rot]
 
