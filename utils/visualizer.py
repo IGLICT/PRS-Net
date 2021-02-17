@@ -20,7 +20,7 @@ class Visualizer():
             import tensorflow as tf
             self.tf = tf
             self.log_dir = os.path.join(opt.checkpoints_dir, opt.name, 'logs')
-            self.writer = tf.compat.v1.summary.FileWriter(self.log_dir)
+            self.writer = tf.summary.create_file_writer(self.log_dir)
 
         self.log_name = os.path.join(opt.checkpoints_dir, opt.name, 'loss_log.txt')
         with open(self.log_name, "a") as log_file:
@@ -34,7 +34,7 @@ class Visualizer():
             for tag, value in errors.items():
                 # with self.writer.as_default():
                     # self.tf.summary.scalar(tag, value, step=step)
-                summary = self.tf.compat.v1.Summary(value=[self.tf.Summary.Value(tag=tag, simple_value=value)])
+                summary = self.tf.compat.v1.Summary(value=[self.tf.compat.v1.Summary.Value(tag=tag, simple_value=value)])
                 self.writer.add_summary(summary, step)
                 self.writer.flush()
                 
@@ -56,7 +56,7 @@ class Visualizer():
             hist.bucket.append(c)
         # with self.writer.as_default():
             # self.tf.summary.histogram(tag, hist, step=step)
-        self.tf.compat.v1.Summary(value=[self.tf.Summary.Value(tag=tag, histo=hist)])
+        self.tf.compat.v1.Summary(value=[self.tf.compat.v1.Summary.Value(tag=tag, histo=hist)])
         self.writer.add_summary(summary, step)
         self.writer.flush()
         # 
