@@ -60,7 +60,7 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         losses = [torch.mean(x) if not isinstance(x, int) else x for x in losses]
         losses_dict = dict(zip(PRSNet.loss_names, losses))
 
-        loss = (losses_dict['ref'] + losses_dict['rot'] + losses_dict['reg_plane']+losses_dict['reg_rot'])
+        loss = (losses_dict['ref'] + losses_dict['rot'] + losses_dict['reg_plane'] + losses_dict['reg_rot'])
 
         ############### Backward Pass ####################
         # update generator weights
@@ -71,10 +71,10 @@ for epoch in range(start_epoch, opt.niter + opt.niter_decay + 1):
         ############## Display results and errors ##########
         ### print out errors
         if total_steps % opt.print_freq == print_delta:
-            errors_gan = {k: v.data.item() if not isinstance(v, int) else v for k, v in losses_dict.items()}
+            errors = {k: v.data.item() if not isinstance(v, int) else v for k, v in losses_dict.items()}
             t = (time.time() - iter_start_time) / opt.batchSize
-            visualizer.print_current_errors(epoch, epoch_iter, errors_gan, t)
-            visualizer.plot_current_errors(errors_gan, total_steps)
+            visualizer.print_current_errors(epoch, epoch_iter, errors, t)
+            visualizer.plot_current_errors(errors, total_steps)
             visualizer.plot_current_weights(PRSNet, total_steps)
             visualizer.print_line('')
 

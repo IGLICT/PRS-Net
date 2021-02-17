@@ -47,7 +47,6 @@ class PRSNet(BaseModel):
         points = Variable(points.data.cuda())
         cp = Variable(cp.data.cuda())
         quat, plane = self.netPRS(voxel)
-        # print(quat,plane)
         loss_ref, loss_rot = self.sym_loss(points, cp, voxel, plane = plane, quat = quat)
         loss_reg_plane, loss_reg_rot = self.reg_loss(plane = plane, quat = quat, weight=self.opt.weight)
 

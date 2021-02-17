@@ -33,8 +33,6 @@ class Visualizer():
     def plot_current_errors(self, errors, step):
         if self.tf_log:
             for tag, value in errors.items():
-                # with self.writer.as_default():
-                    # self.tf.summary.scalar(tag, value, step=step)
                 summary = self.tf.compat.v1.Summary(value=[self.tf.compat.v1.Summary.Value(tag=tag, simple_value=value)])
                 self.writer.add_summary(summary, step)
                 self.writer.flush()
@@ -55,9 +53,7 @@ class Visualizer():
             hist.bucket_limit.append(edge)
         for c in counts:
             hist.bucket.append(c)
-        # with self.writer.as_default():
-            # self.tf.summary.histogram(tag, hist, step=step)
-        self.tf.compat.v1.Summary(value=[self.tf.compat.v1.Summary.Value(tag=tag, histo=hist)])
+        summary = self.tf.compat.v1.Summary(value=[self.tf.compat.v1.Summary.Value(tag=tag, histo=hist)])
         self.writer.add_summary(summary, step)
         self.writer.flush()
         # 
@@ -66,7 +62,6 @@ class Visualizer():
         if self.tf_log:
             for tag, value in net.named_parameters():
                 if value.requires_grad:
-                    # print(tag)
                     self.log_histogram(tag, value.data.cpu().numpy(), step)
                     if value.grad is not None:
                         self.log_histogram(tag+'/grad', value.grad.data.cpu().numpy(), step)
