@@ -28,7 +28,9 @@ If you find our work useful in your research, please consider citing:
 The code is tested with Ubuntu 18.04, Python 3.8, Pytorch v1.7, TensorFlow v1.15, CUDA 10.0 and cuDNN v7.6.
 
 Install the following Python dependencies (with `pip install`):
-    tensorflow==
+    
+    tensorflow==2.4.1
+    tensorboard==2.4.1
     torchsummary==1.5.1
     torch==1.7.1
     scipy==1.6.0
