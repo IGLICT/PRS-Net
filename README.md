@@ -31,12 +31,13 @@ Install the following Python dependencies (with `pip install`):
     
     tensorflow==2.4.1
     tensorboard==2.4.1
-    torchsummary==1.5.1
     torch==1.7.1
+    torchsummary==1.5.1
     scipy==1.6.0
     
 
 ## Inference
+
 
 
 
