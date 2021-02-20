@@ -46,7 +46,7 @@ We use MATLAB to preprocess data. First you need to download [ShapeNetCore.v2](h
     python test.py --dataroot ./datasets/shapenet --name exp --num_quat 3 --num_plane 3
 
 ## Acknowledgments
-The structure of this code is borrowed from pix2pixHD(https://github.com/NVIDIA/pix2pixHD), and some MATLAB code is borrowed from [volumetricPrimitives](https://github.com/shubhtuls/volumetricPrimitives).
+The structure of this code is based on [pix2pixHD](https://github.com/NVIDIA/pix2pixHD), and some MATLAB code is based on [volumetricPrimitives](https://github.com/shubhtuls/volumetricPrimitives).
 
 
 
