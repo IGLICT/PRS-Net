@@ -43,7 +43,7 @@ And for running MATLAB code, you need to install [gptoolbox](https://github.com/
 
 
 ## Data preprocessing
-We use MATLAB to preprocess data. First you need to download [ShapeNetCore.v2](http://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2/) into `preprocess/shapenet` and then run `preprocess/precomputeShapeData.m`
+We use MATLAB to preprocess data. First download [ShapeNetCore.v2](http://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2/) into `preprocess/shapenet` and then run `preprocess/precomputeShapeData.m`
 ## Training
     python train.py --dataroot ./datasets/shapenet --name exp --tf_log --num_quat 3 --num_plane 3 --batchSize 32 --weight 25
 ## Inference
