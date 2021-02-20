@@ -1,5 +1,7 @@
 # PRS-Net: Planar Reflective Symmetry Detection Net for 3D Models
 
+## Update
+[02/2021] We released the training/testing code. The pre-trained model and postprocessing code will be available later.
 
 ## Introduction
 This repository is code release for PRS-Net: Planar Reflective Symmetry Detection Net for 3D Models (arXiv report [here](https://arxiv.org/pdf/1910.06511.pdf)).
@@ -8,7 +10,7 @@ In geometry processing, symmetry is a universal type of high-level structural in
 
 In this repository, we provide PRS-Net model implementation (with Pytorch) as well as data preparation, training and evaluation scripts on ShapeNet.
 
-[02/2021] We released the training/testing code. Pre-trained models and postprocessing code will be available later.
+
 
 ## Citation
 
