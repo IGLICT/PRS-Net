@@ -17,8 +17,8 @@ class TrainOptions(BaseOptions):
         self.parser.add_argument('--load_pretrain', type=str, default='', help='load the pretrained model from the specified location')
         self.parser.add_argument('--which_epoch', type=str, default='latest', help='which epoch to load? set to latest to use latest cached model')
         self.parser.add_argument('--phase', type=str, default='train', help='train, val, test, etc')
-        self.parser.add_argument('--niter', type=int, default=5, help='# of iter at starting learning rate')
-        self.parser.add_argument('--niter_decay', type=int, default=5, help='# of iter to linearly decay learning rate to zero')
+        self.parser.add_argument('--niter', type=int, default=100, help='# of iter at starting learning rate')
+        self.parser.add_argument('--niter_decay', type=int, default=100, help='# of iter to linearly decay learning rate to zero')
         self.parser.add_argument('--beta1', type=float, default=0.9, help='momentum term of adam')
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate for adam')
         

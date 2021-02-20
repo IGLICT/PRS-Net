@@ -20,7 +20,7 @@ function [] = precomputeShapeData()
         num_per_model = ceil(targetnum / length(train_ids));
         for j=1:size(train_ids,1)
 
-            modelfile = [cates(i).folder,'/',cates(i).name,'/',train_ids{j},'/model.obj'];
+            modelfile = [cates(i).folder,'/',cates(i).name,'/',train_ids{j},'/models/model_normalized.obj'];
             %ignore bad meshes
             try
                 [vertices,faces,~]=readOBJ(modelfile);
@@ -53,7 +53,7 @@ function [] = precomputeShapeData()
         test_ids = test_ids{1};
         fclose(fid);
         for j=1:size(test_ids,1)
-            modelfile = [cates(i).folder,'/',cates(i).name,'/',test_ids{j},'/model.obj'];
+            modelfile = [cates(i).folder,'/',cates(i).name,'/',test_ids{j},'/models/model_normalized.obj'];
             %ignore bad meshes
             try
                 [vertices,faces,~]=readOBJ(modelfile);

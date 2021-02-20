@@ -34,11 +34,19 @@ Install the following Python dependencies (with `pip install`):
     torch==1.7.1
     torchsummary==1.5.1
     scipy==1.6.0
-    
 
+And for running MATLAB code, you need to install [gptoolbox](https://github.com/alecjacobson/gptoolbox)
+
+
+## Data preprocessing
+We use MATLAB to preprocess data. First you need to download [ShapeNetCore.v2](http://shapenet.cs.stanford.edu/shapenet/obj-zip/ShapeNetCore.v2/) into `preprocess/shapenet` and then run `preprocess/precomputeShapeData.m`
+## Training
+    python train.py --dataroot ./datasets/shapenet --name exp --tf_log --num_quat 3 --num_plane 3 --batchSize 32 --weight 25
 ## Inference
+    python test.py --dataroot ./datasets/shapenet --name exp --num_quat 3 --num_plane 3
 
-
+## Acknowledgments
+The structure of this code is borrowed from pix2pixHD(https://github.com/NVIDIA/pix2pixHD), and some MATLAB code is borrowed from [volumetricPrimitives](https://github.com/shubhtuls/volumetricPrimitives).
 
 
 
