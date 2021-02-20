@@ -8,6 +8,8 @@ In geometry processing, symmetry is a universal type of high-level structural in
 
 In this repository, we provide PRS-Net model implementation (with Pytorch) as well as data preparation, training and evaluation scripts on ShapeNet.
 
+[02/2021] We released the training/testing code. Pre-trained models and postprocessing code will be available later.
+
 ## Citation
 
 If you find our work useful in your research, please consider citing:
@@ -43,16 +45,9 @@ We use MATLAB to preprocess data. First you need to download [ShapeNetCore.v2](h
 ## Training
     python train.py --dataroot ./datasets/shapenet --name exp --tf_log --num_quat 3 --num_plane 3 --batchSize 32 --weight 25
 ## Inference
+
     python test.py --dataroot ./datasets/shapenet --name exp --num_quat 3 --num_plane 3
 
 ## Acknowledgments
 The structure of this code is based on [pix2pixHD](https://github.com/NVIDIA/pix2pixHD), and some MATLAB code is based on [volumetricPrimitives](https://github.com/shubhtuls/volumetricPrimitives).
-
-
-
-
-
-
-
-
 
